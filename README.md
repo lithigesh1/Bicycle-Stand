@@ -1,8 +1,11 @@
+#API Doumentation
 **Base URL**
 
 ```
-https://bicycle-stand.onrender.com/api
-```
+
+[https://bicycle-stand.onrender.com/api](https://bicycle-stand.onrender.com/api)
+
+````
 
 ---
 
@@ -18,27 +21,25 @@ Send a lock/unlock command for a specific bicycle.
 
 ```json
 {
-  "cycleId": "string",          // Unique ID of the bicycle
-  "command": "lock" | "unlock"  // Command to execute
+  "cycleId": "string",
+  "command": "lock" | "unlock"
 }
+````
 
-```
-
-- **Response:**
+* **Response:**
 
 ```json
 {
   "message": "Command saved successfully"
 }
-
 ```
 
-- **Errors:**
+* **Errors:**
 
-| Status Code | Description |
-| --- | --- |
-| 400 | Missing or invalid fields |
-| 500 | Server failed to save command |
+| Status Code | Description                   |
+| ----------- | ----------------------------- |
+| 400         | Missing or invalid fields     |
+| 500         | Server failed to save command |
 
 ---
 
@@ -46,12 +47,13 @@ Send a lock/unlock command for a specific bicycle.
 
 ESP32 device polls this endpoint to fetch the latest command.
 
-- **URL Parameters:**
+* **URL Parameters:**
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| cycleId | String | Unique ID of the bicycle |
-- **Response:**
+| Parameter | Type   | Description              |
+| --------- | ------ | ------------------------ |
+| cycleId   | String | Unique ID of the bicycle |
+
+* **Response:**
 
 ```json
 {
@@ -60,15 +62,14 @@ ESP32 device polls this endpoint to fetch the latest command.
   "command": "lock" | "unlock",
   "createdAt": "timestamp"
 }
-
 ```
 
-- **Errors:**
+* **Errors:**
 
-| Status Code | Description |
-| --- | --- |
-| 404 | No command found |
-| 500 | Error fetching command |
+| Status Code | Description            |
+| ----------- | ---------------------- |
+| 404         | No command found       |
+| 500         | Error fetching command |
 
 ---
 
@@ -78,36 +79,34 @@ ESP32 device polls this endpoint to fetch the latest command.
 
 ESP32 sends battery status, GPS location, and tamper alerts.
 
-- **Request Body:**
+* **Request Body:**
 
 ```json
 {
-  "cycleId": "string",       // Unique ID of the bicycle
-  "battery": 0-100,          // Battery percentage
-  "location": {              // GPS coordinates 
+  "cycleId": "string",
+  "battery": 0-100,
+  "location": {
     "lat": Number,
     "lng": Number
   },
-  "tamper": true | false     // Tamper alert flag 
+  "tamper": true | false
 }
-
 ```
 
-- **Response:**
+* **Response:**
 
 ```json
 {
   "message": "Status updated"
 }
-
 ```
 
-- **Errors:**
+* **Errors:**
 
-| Status Code | Description |
-| --- | --- |
-| 400 | Missing or invalid fields |
-| 500 | Failed to update status |
+| Status Code | Description               |
+| ----------- | ------------------------- |
+| 400         | Missing or invalid fields |
+| 500         | Failed to update status   |
 
 ---
 
@@ -115,12 +114,13 @@ ESP32 sends battery status, GPS location, and tamper alerts.
 
 Fetch the current status of a bicycle (for mobile app or monitoring).
 
-- **URL Parameters:**
+* **URL Parameters:**
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| cycleId | String | Unique ID of the bicycle |
-- **Response:**
+| Parameter | Type   | Description              |
+| --------- | ------ | ------------------------ |
+| cycleId   | String | Unique ID of the bicycle |
+
+* **Response:**
 
 ```json
 {
@@ -134,15 +134,14 @@ Fetch the current status of a bicycle (for mobile app or monitoring).
   },
   "lastSeen": "timestamp"
 }
-
 ```
 
-- **Errors:**
+* **Errors:**
 
-| Status Code | Description |
-| --- | --- |
-| 404 | Cycle not found |
-| 500 | Error fetching status |
+| Status Code | Description           |
+| ----------- | --------------------- |
+| 404         | Cycle not found       |
+| 500         | Error fetching status |
 
 ---
 
@@ -150,8 +149,8 @@ Fetch the current status of a bicycle (for mobile app or monitoring).
 
 Logs are created internally when tamper or disconnect events happen.
 
-- Logs are stored in the `logs` collection.
-- Each log entry contains:
+* Logs are stored in the `logs` collection.
+* Each log entry contains:
 
 ```json
 {
@@ -160,7 +159,6 @@ Logs are created internally when tamper or disconnect events happen.
   "message": "string",
   "timestamp": "date"
 }
-
 ```
 
 ---
@@ -169,12 +167,13 @@ Logs are created internally when tamper or disconnect events happen.
 
 Fetch all logs related to a specific cycle.
 
-- **URL Parameters:**
+* **URL Parameters:**
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| cycleId | String | Unique ID of the bicycle |
-- **Response:**
+| Parameter | Type   | Description              |
+| --------- | ------ | ------------------------ |
+| cycleId   | String | Unique ID of the bicycle |
+
+* **Response:**
 
 ```json
 [
@@ -187,15 +186,14 @@ Fetch all logs related to a specific cycle.
   },
   ...
 ]
-
 ```
 
-- **Errors:**
+* **Errors:**
 
-| Status Code | Description |
-| --- | --- |
-| 404 | No logs found |
-| 500 | Error fetching logs |
+| Status Code | Description         |
+| ----------- | ------------------- |
+| 404         | No logs found       |
+| 500         | Error fetching logs |
 
 ---
 
@@ -203,19 +201,18 @@ Fetch all logs related to a specific cycle.
 
 Add a new log entry (useful for manual/testing purposes).
 
-- **Request Body:**
+* **Request Body:**
 
 ```json
 {
-  "cycleId": "string",          // Unique ID of the bicycle
+  "cycleId": "string",
   "type": "tamper" | "disconnect",
   "message": "string",
-  "timestamp": "ISO 8601 date string" // Optional, defaults to current time
+  "timestamp": "ISO 8601 date string"
 }
-
 ```
 
-- **Response:**
+* **Response:**
 
 ```json
 {
@@ -228,14 +225,13 @@ Add a new log entry (useful for manual/testing purposes).
     "timestamp": "date"
   }
 }
-
 ```
 
-- **Errors:**
+* **Errors:**
 
-| Status Code | Description |
-| --- | --- |
-| 400 | Missing or invalid fields |
-| 500 | Server error creating log |
+| Status Code | Description               |
+| ----------- | ------------------------- |
+| 400         | Missing or invalid fields |
+| 500         | Server error creating log |
 
----
+```
